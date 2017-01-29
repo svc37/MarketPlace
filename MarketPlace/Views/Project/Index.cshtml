@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MarketPlace.Models.ProjectViewModel>
+
+@{
+    ViewBag.Title = "All Projects";
+}
+
+<h2>All Projects</h2>
+
+<p>
+    @*@Html.ActionLink(linkText: "Create New", actionName: "Create", controllerName: "Project", routeValues: null, htmlAttributes: null)*@ 
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MachineType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Material)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Size)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dimensions)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tolerance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Volume)
+        </th>
+        <th></th>
+    </tr>
+@if (Model != null)
+{ 
+        foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MachineType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Material)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dimensions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tolerance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volume)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+                @Html.ActionLink(linkText: "Make a Bid", actionName: "Create", controllerName: "UserBids", routeValues: new { projectId = item.Id }, htmlAttributes: null)
+            </td>
+        </tr>
+    }
+}
+</table>

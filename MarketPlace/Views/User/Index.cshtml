@@ -1,0 +1,81 @@
+﻿@model MarketPlace.Models.UserViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Your Account Info</h4>
+        <hr />
+        @Html.HiddenFor(model => model.Id)
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.CompanyName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.CompanyName, Model.CompanyName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.StreetAddress, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.StreetAddress, Model.StreetAddress, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.StreetAddress2, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.StreetAddress2, Model.StreetAddress2, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.City, Model.City, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.State, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.State, Model.State, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ZipCode, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.ZipCode, Model.ZipCode, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.PhoneNumber, Model.PhoneNumber, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.Email, Model.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @*<input type="submit" value="Edit" formaction="Edit" formmethod="post" class="btn btn-default" />*@
+                @Html.ActionLink(linkText: "Edit",actionName: "Edit", controllerName: "User",routeValues: null, htmlAttributes: null)   |
+                @Html.ActionLink(linkText: "Browse Projects", actionName: "Index", controllerName: "Project", routeValues: null, htmlAttributes: null)     |
+                @Html.ActionLink(linkText: "My Projects", actionName: "Index", controllerName: "MyProjects", routeValues: null, htmlAttributes: null)   |
+                @Html.ActionLink(linkText: "My Bids", actionName: "Index", controllerName: "UserBids", routeValues: null, htmlAttributes: null)   |
+                @Html.ActionLink(linkText: "My Project's Bids", actionName: "Index", controllerName: "MyProjectBids", routeValues: null, htmlAttributes: null)   |
+
+                
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
