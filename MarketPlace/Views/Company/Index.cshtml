@@ -1,4 +1,4 @@
-﻿@model MarketPlace.Models.UserViewModel
+﻿@model MarketPlace.Models.CompanyViewModel
 
 @using (Html.BeginForm())
 {
@@ -63,7 +63,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 @*<input type="submit" value="Edit" formaction="Edit" formmethod="post" class="btn btn-default" />*@
-                @Html.ActionLink(linkText: "Edit",actionName: "Edit", controllerName: "User",routeValues: null, htmlAttributes: null)   |
+                @Html.ActionLink(linkText: "Edit",actionName: "Edit", controllerName: "Company", routeValues: null, htmlAttributes: null)   |
                 @Html.ActionLink(linkText: "Browse Projects", actionName: "Index", controllerName: "Project", routeValues: null, htmlAttributes: null)     |
                 @Html.ActionLink(linkText: "My Projects", actionName: "Index", controllerName: "MyProjects", routeValues: null, htmlAttributes: null)   |
                 @Html.ActionLink(linkText: "My Bids", actionName: "Index", controllerName: "UserBids", routeValues: null, htmlAttributes: null)   |

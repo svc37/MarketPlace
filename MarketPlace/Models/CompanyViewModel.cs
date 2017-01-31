@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MarketPlace.Models
 {
-    public class UserViewModel
+    public class CompanyViewModel
     {
         [Required]
         public int Id { get; set; }

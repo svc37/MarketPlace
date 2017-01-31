@@ -8,13 +8,13 @@ using System.Web.Mvc;
 
 namespace MarketPlace.Controllers
 {
-    public class UserController : Controller
+    public class CompanyController : Controller
     {
         // GET: Shop
         public ActionResult Index()
         {
 
-            UserViewModel model = new UserViewModel();
+            CompanyViewModel model = new CompanyViewModel();
             DatabaseHelper db = new DatabaseHelper();
             model = db.GetCompany(SessionHelper.CompanyId);  
 
@@ -27,10 +27,10 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(UserViewModel user)
+        public ActionResult Create(CompanyViewModel company)
         {
             DatabaseHelper db = new DatabaseHelper();
-            int companyId = db.CreateCompany(user);
+            int companyId = db.CreateCompany(company);
             if (companyId > 0)
             {
 
@@ -45,15 +45,15 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UserViewModel user)
+        public ActionResult Edit(CompanyViewModel company)
         {
             DatabaseHelper db = new DatabaseHelper();
-            if (db.EditCompany(user))
+            if (db.EditCompany(company))
             {
                 ViewBag.Message = "Employee details edited successfully";
             }
 
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Index", "Company");
         }
 
 
@@ -64,7 +64,7 @@ namespace MarketPlace.Controllers
 
         public ActionResult Edit()
         {
-            UserViewModel model = new UserViewModel();
+            CompanyViewModel model = new CompanyViewModel();
             DatabaseHelper db = new DatabaseHelper();
             model = db.GetCompany(SessionHelper.CompanyId);  
 

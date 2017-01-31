@@ -20,7 +20,7 @@ namespace MarketPlace.Repository
         }
 
 
-        public int CreateCompany(UserViewModel obj)
+        public int CreateCompany(CompanyViewModel obj)
         {
             DbConnection();
             int companyId = -1971;
@@ -56,7 +56,7 @@ namespace MarketPlace.Repository
 
         }
 
-        public bool EditCompany(UserViewModel obj)
+        public bool EditCompany(CompanyViewModel obj)
         {
             DbConnection();
             SqlCommand com = new SqlCommand("EditCompany", conn);
@@ -90,9 +90,9 @@ namespace MarketPlace.Repository
 
         }
 
-        public UserViewModel GetCompany(int Id)
+        public CompanyViewModel GetCompany(int Id)
         {
-            UserViewModel model = new UserViewModel();
+            CompanyViewModel model = new CompanyViewModel();
             DbConnection();
             SqlCommand com = new SqlCommand("GetCompany", conn);
             com.CommandType = System.Data.CommandType.StoredProcedure;
@@ -121,9 +121,9 @@ namespace MarketPlace.Repository
 
         }
 
-        //public UserViewModel GetUserByEmail(string email)
+        //public CompanyViewModel GetUserByEmail(string email)
         //{
-        //    UserViewModel model = new UserViewModel();
+        //    CompanyViewModel model = new CompanyViewModel();
         //    DbConnection();
         //    SqlCommand com = new SqlCommand("GetUserByEmail", conn);
         //    com.CommandType = System.Data.CommandType.StoredProcedure;
@@ -495,7 +495,7 @@ namespace MarketPlace.Repository
             string salt = Convert.ToBase64String(obj.Salt);
 
             com.Parameters.AddWithValue("@CompanyId", obj.CompanyId);
-            com.Parameters.AddWithValue("@UserName", obj.Email);
+            com.Parameters.AddWithValue("@Email", obj.Email);
             com.Parameters.AddWithValue("@Password", password);
             com.Parameters.AddWithValue("@Salt", salt);
 
@@ -558,7 +558,7 @@ namespace MarketPlace.Repository
 
         }
 
-        public int GetPasswordCompanyId(string userName)
+        public int GetPasswordCompanyId(string email)
         {
             DbConnection();
             SqlCommand com = new SqlCommand("GetPasswordCompanyId", conn);
@@ -568,11 +568,11 @@ namespace MarketPlace.Repository
             using (conn)
             {
                 conn.Open();
-                com.Parameters.AddWithValue("@UserName", userName);
+                com.Parameters.AddWithValue("@Email", email);
                 SqlDataReader reader = com.ExecuteReader();
                 while (reader.Read())
                 {
-                    companyId = int.Parse(reader["UserId"].ToString());
+                    companyId = int.Parse(reader["CompanyId"].ToString());
                 }
             }
             return companyId;
