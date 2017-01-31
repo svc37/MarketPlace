@@ -16,7 +16,7 @@ namespace MarketPlace.Controllers
 
             UserViewModel model = new UserViewModel();
             DatabaseHelper db = new DatabaseHelper();
-            model = db.GetUser(SessionHelper.CompanyId);  
+            model = db.GetCompany(SessionHelper.CompanyId);  
 
             return View(model);
         }
@@ -30,12 +30,12 @@ namespace MarketPlace.Controllers
         public ActionResult Create(UserViewModel user)
         {
             DatabaseHelper db = new DatabaseHelper();
-
-            if (db.CreateUser(user))
+            int companyId = db.CreateCompany(user);
+            if (companyId > 0)
             {
-                //if create is successful, user the provided email to grab the record we just saved, so that we can get the ID.
-                //we need this ID to associate the login info on the next page. 
-                user = db.GetUserByEmail(user.Email);
+
+                //user = db.GetUser(companyId);
+                SessionHelper.SetCompanyId(companyId); 
                return RedirectToAction("Create", "LogIn");
             }
             else
@@ -48,7 +48,7 @@ namespace MarketPlace.Controllers
         public ActionResult Edit(UserViewModel user)
         {
             DatabaseHelper db = new DatabaseHelper();
-            if (db.EditUser(user))
+            if (db.EditCompany(user))
             {
                 ViewBag.Message = "Employee details edited successfully";
             }
@@ -66,7 +66,7 @@ namespace MarketPlace.Controllers
         {
             UserViewModel model = new UserViewModel();
             DatabaseHelper db = new DatabaseHelper();
-            model = db.GetUser(SessionHelper.CompanyId);  
+            model = db.GetCompany(SessionHelper.CompanyId);  
 
             return View(model);
 

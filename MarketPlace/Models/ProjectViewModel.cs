@@ -14,6 +14,11 @@ namespace MarketPlace.Models
 
         public int CompanyId { get; set; }
 
+        [DataType(DataType.Text)]
+        public string FileName { get; set; }
+
+        [Display(Name = "File")]
+        public HttpPostedFileBase File { get; set; }
 
         [Display(Name = "Accepted Bidder")]
         public int? SupplierId { get; set; }
@@ -38,7 +43,6 @@ namespace MarketPlace.Models
 
         [Display(Name = "Accepted Date")]
         public DateTime? AcceptedDate { get; set; }
-
 
         [Required(ErrorMessage = "Please select a machine type")]
         [DataType(DataType.Text)]

@@ -2,6 +2,7 @@
 using MarketPlace.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -36,6 +37,15 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public ActionResult Create(ProjectViewModel model)
         {
+            string pathToSave = "";
+            string filename = "";
+            if (Request.Files[0].ContentLength != 0)
+            {
+                pathToSave = Server.MapPath("C:/Code/CadFiles/SavedFiles");
+                filename = Path.GetFileName(Request.Files[0].FileName);
+
+            }
+            model.FileName = filename;
             model.CompanyId = SessionHelper.CompanyId;
             db.CreateProject(model);
             return RedirectToAction("Index");

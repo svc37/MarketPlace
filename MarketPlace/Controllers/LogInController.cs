@@ -23,7 +23,7 @@ namespace MarketPlace.Controllers
 
             if (success)
             {
-                SessionHelper.SetCompanyId(db.GetPasswordCompanyId(model.UserName));
+                SessionHelper.SetCompanyId(db.GetPasswordCompanyId(model.Email));
                 int compId = SessionHelper.CompanyId;
                 return RedirectToAction("Index", "User");
             }
@@ -44,8 +44,8 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public ActionResult Create(LogInViewModel model)
         {
-            UserViewModel uvm = db.GetUserByEmail(model.UserName);
-            SessionHelper.SetCompanyId(uvm.Id);
+            //UserViewModel uvm = db.GetUserByEmail(model.Email);
+            //SessionHelper.SetCompanyId(uvm.Id);
 
 
             byte[] salt = Security.GenerateSalt();
