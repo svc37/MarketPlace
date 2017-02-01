@@ -391,6 +391,7 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@CreatedBy", "sculler"); //TODO: Get user worked out.  SessionHelper
             com.Parameters.AddWithValue("@AcceptedDate", obj.AcceptedDate);
             com.Parameters.AddWithValue("@AcceptedBy", obj.AcceptedBy);
+            com.Parameters.AddWithValue("@Comments", obj.Comments);
 
             using (conn)
             {
@@ -437,6 +438,8 @@ namespace MarketPlace.Repository
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.Comments = reader["Comments"].ToString();
+
 
                     modelList.Add(model);
 
@@ -475,6 +478,7 @@ namespace MarketPlace.Repository
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.Comments = reader["Comments"].ToString();
 
                     modelList.Add(model);
                 }
