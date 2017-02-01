@@ -18,7 +18,7 @@ namespace MarketPlace.Models
         public string FileName { get; set; }
 
         [Display(Name = "File")]
-        public HttpPostedFileBase File { get; set; }
+        public HttpPostedFileBase CadFile { get; set; }
 
         [Display(Name = "Accepted Bidder")]
         public int? SupplierId { get; set; }

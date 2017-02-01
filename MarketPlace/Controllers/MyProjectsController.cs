@@ -37,19 +37,37 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public ActionResult Create(ProjectViewModel model)
         {
-            string pathToSave = "";
-            string filename = "";
-            if (Request.Files[0].ContentLength != 0)
-            {
-                pathToSave = Server.MapPath("C:/Code/CadFiles/SavedFiles");
-                filename = Path.GetFileName(Request.Files[0].FileName);
+            string targetFolder = ConfigHelper.FileSaveLocation;
+            string filename = Path.GetFileName(model.CadFile.FileName);
+            string savePath = Path.Combine(targetFolder, filename);
+            model.CadFile.SaveAs(savePath);
+            //if (System.IO.File.Exists(savePath))
+            //{
 
-            }
+            //}
+
             model.FileName = filename;
             model.CompanyId = SessionHelper.CompanyId;
             db.CreateProject(model);
             return RedirectToAction("Index");
 
+        }
+
+        public ActionResult DownloadFile(string fileName)
+        {
+            string filepath = Path.Combine(ConfigHelper.FileSaveLocation, fileName);
+            byte[] filedata = System.IO.File.ReadAllBytes(filepath);
+            string contentType = MimeMapping.GetMimeMapping(filepath);
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = fileName,
+                Inline = true,
+            };
+
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            return File(filedata, contentType);
         }
     }
 }
