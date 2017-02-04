@@ -2,6 +2,7 @@
 using MarketPlace.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +20,24 @@ namespace MarketPlace.Controllers
 
             return View(model);
         }
+
+        public ActionResult DownloadFile(string fileName)
+        {
+            string filepath = Path.Combine(ConfigHelper.FileSaveLocation, fileName);
+            byte[] filedata = System.IO.File.ReadAllBytes(filepath);
+            string contentType = MimeMapping.GetMimeMapping(filepath);
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = fileName,
+                Inline = true,
+            };
+
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            return File(filedata, contentType);
+        }
+
 
         #region Maybe Not Needed
         //public ActionResult Create()

@@ -38,6 +38,13 @@
         <th>
             @Html.DisplayNameFor(model => model.AcceptedDate)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeclineReason)
+        </th>
+
         <th></th>
     </tr>
 
@@ -70,6 +77,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.AcceptedDate)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeclineReason)
+        </td>
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

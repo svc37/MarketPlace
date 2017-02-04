@@ -8,15 +8,15 @@ using System.Web.Mvc;
 
 namespace MarketPlace.Controllers
 {
-    public class UserController : Controller
+    public class CompanyController : Controller
     {
         // GET: Shop
         public ActionResult Index()
         {
 
-            UserViewModel model = new UserViewModel();
+            CompanyViewModel model = new CompanyViewModel();
             DatabaseHelper db = new DatabaseHelper();
-            model = db.GetUser(SessionHelper.CompanyId);  
+            model = db.GetCompany(SessionHelper.CompanyId);  
 
             return View(model);
         }
@@ -27,15 +27,15 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(UserViewModel user)
+        public ActionResult Create(CompanyViewModel company)
         {
             DatabaseHelper db = new DatabaseHelper();
-
-            if (db.CreateUser(user))
+            int companyId = db.CreateCompany(company);
+            if (companyId > 0)
             {
-                //if create is successful, user the provided email to grab the record we just saved, so that we can get the ID.
-                //we need this ID to associate the login info on the next page. 
-                user = db.GetUserByEmail(user.Email);
+
+                //user = db.GetUser(companyId);
+                SessionHelper.SetCompanyId(companyId); 
                return RedirectToAction("Create", "LogIn");
             }
             else
@@ -45,15 +45,15 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UserViewModel user)
+        public ActionResult Edit(CompanyViewModel company)
         {
             DatabaseHelper db = new DatabaseHelper();
-            if (db.EditUser(user))
+            if (db.EditCompany(company))
             {
                 ViewBag.Message = "Employee details edited successfully";
             }
 
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Index", "Company");
         }
 
 
@@ -64,9 +64,9 @@ namespace MarketPlace.Controllers
 
         public ActionResult Edit()
         {
-            UserViewModel model = new UserViewModel();
+            CompanyViewModel model = new CompanyViewModel();
             DatabaseHelper db = new DatabaseHelper();
-            model = db.GetUser(SessionHelper.CompanyId);  
+            model = db.GetCompany(SessionHelper.CompanyId);  
 
             return View(model);
 

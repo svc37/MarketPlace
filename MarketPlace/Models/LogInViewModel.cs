@@ -13,12 +13,10 @@ namespace MarketPlace.Models
 
         public int CompanyId { get; set; }
 
-        [Display(Name = "Company Name")]
-        public string CompanyName { get; set; }
-
-
-        [Display(Name = "User Name")]
-        public string UserName { get; set; }
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Display(Name = "Password")]
         public string PasswordText { get; set; }

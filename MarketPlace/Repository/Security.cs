@@ -77,5 +77,11 @@ namespace MarketPlace.Repository
 
             return true;
         }
+
+        public static void LogOut()
+        {
+            SessionHelper.SetCompanyId(0);
+            SessionHelper.SetProjectId(0);
+        }
     }
 }

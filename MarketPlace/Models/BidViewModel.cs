@@ -42,6 +42,13 @@ namespace MarketPlace.Models
         [Display(Name = "Accepted Date")]
         public DateTime? AcceptedDate { get; set; }
 
+        [Display(Name = "Comments")]
+        public string Comments { get; set; }
+
+        [Display(Name = "DeclineReason")]
+        public string DeclineReason { get; set; }
+
+        public bool Declined { get; set; }
 
 
 

@@ -30,12 +30,26 @@ namespace MarketPlace.Controllers
                     //add the bids to the model that was created above
                     foreach (BidViewModel bid in bvm)
                     {
-                        model.Add(bid);
+                        if (!bid.Declined)
+                        {
+                            model.Add(bid);
+                        }
                     }
                 }
 
             }
             return View(model);
         }
+
+        public ActionResult Edit(BidViewModel model)
+        {
+            //BidViewModel model = new BidViewModel();
+            //model = db.GetBidById(bidId);
+            model.DeclineReason = model.DeclineReason;
+            model.Declined = true;
+            db.EditBid(model);
+            return RedirectToAction("Index", "MyProjectBids");
+        }
+
     }
 }

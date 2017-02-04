@@ -20,42 +20,46 @@ namespace MarketPlace.Repository
         }
 
 
-        public bool CreateUser(UserViewModel obj)
+        public int CreateCompany(CompanyViewModel obj)
         {
             DbConnection();
-            SqlCommand com = new SqlCommand("CreateUser", conn);
+            int companyId = -1971;
+            SqlCommand com = new SqlCommand("CreateCompany", conn);
             com.CommandType = System.Data.CommandType.StoredProcedure;
 
+            SqlParameter outPutVal = new SqlParameter("@tableId", System.Data.SqlDbType.Int);
+
+            outPutVal.Direction = System.Data.ParameterDirection.Output;
+            com.Parameters.Add(outPutVal);
             com.Parameters.AddWithValue("@CompanyName", obj.CompanyName);
             com.Parameters.AddWithValue("@StreetAddress", obj.StreetAddress);
             com.Parameters.AddWithValue("@StreetAddress2", obj.StreetAddress2);
             com.Parameters.AddWithValue("@City", obj.City);
             com.Parameters.AddWithValue("@State", obj.State);
             com.Parameters.AddWithValue("@ZipCode", obj.ZipCode);
-            com.Parameters.AddWithValue("@Email", obj.Email);
             com.Parameters.AddWithValue("@Phone", obj.PhoneNumber);
 
             using (conn)
             {
                 conn.Open();
-                int i = com.ExecuteNonQuery();
-                if (i >= 1)
+                com.ExecuteNonQuery();
+                if (outPutVal.Value != DBNull.Value)
                 {
-                    return true;
+                    companyId = Convert.ToInt32(outPutVal.Value);
+                    return companyId;
+
                 }
-                else
-                {
-                    return false;
-                }
+                return 0;
+                
 
             }
 
         }
 
-        public bool EditUser(UserViewModel obj)
+        public bool EditCompany(CompanyViewModel obj)
         {
             DbConnection();
-            SqlCommand com = new SqlCommand("UserEdit", conn);
+            SqlCommand com = new SqlCommand("EditCompany", conn);
             com.CommandType = System.Data.CommandType.StoredProcedure;
 
             com.Parameters.AddWithValue("@Id", obj.Id);
@@ -65,7 +69,7 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@City", obj.City);
             com.Parameters.AddWithValue("@State", obj.State);
             com.Parameters.AddWithValue("@ZipCode", obj.ZipCode);
-            com.Parameters.AddWithValue("@Email", obj.Email);
+            //com.Parameters.AddWithValue("@Email", obj.Email);
             com.Parameters.AddWithValue("@Phone", obj.PhoneNumber);
             com.Parameters.AddWithValue("@EditedBy", "Shaun Culler"); //TODO: Need to change this once we work out logging in. 
 
@@ -86,11 +90,11 @@ namespace MarketPlace.Repository
 
         }
 
-        public UserViewModel GetUser(int Id)
+        public CompanyViewModel GetCompany(int Id)
         {
-            UserViewModel model = new UserViewModel();
+            CompanyViewModel model = new CompanyViewModel();
             DbConnection();
-            SqlCommand com = new SqlCommand("GetUser", conn);
+            SqlCommand com = new SqlCommand("GetCompany", conn);
             com.CommandType = System.Data.CommandType.StoredProcedure;
 
             using (conn)
@@ -108,7 +112,7 @@ namespace MarketPlace.Repository
                     model.City = reader["City"].ToString();
                     model.ZipCode = reader["ZipCode"].ToString();
                     model.PhoneNumber = reader["Phone"].ToString();
-                    model.Email = reader["Email"].ToString();
+                    //model.Email = reader["Email"].ToString();
                 }
             }
             return model;
@@ -117,34 +121,34 @@ namespace MarketPlace.Repository
 
         }
 
-        public UserViewModel GetUserByEmail(string email)
-        {
-            UserViewModel model = new UserViewModel();
-            DbConnection();
-            SqlCommand com = new SqlCommand("GetUserByEmail", conn);
-            com.CommandType = System.Data.CommandType.StoredProcedure;
+        //public CompanyViewModel GetUserByEmail(string email)
+        //{
+        //    CompanyViewModel model = new CompanyViewModel();
+        //    DbConnection();
+        //    SqlCommand com = new SqlCommand("GetUserByEmail", conn);
+        //    com.CommandType = System.Data.CommandType.StoredProcedure;
 
-            using (conn)
-            {
-                conn.Open();
-                com.Parameters.AddWithValue("@Email", email);
-                SqlDataReader reader = com.ExecuteReader();
-                while (reader.Read())
-                {
-                    model.Id = int.Parse(reader["ID"].ToString());
-                    model.CompanyName = reader["CompanyName"].ToString();
-                    model.StreetAddress = reader["StreetAddress"].ToString();
-                    model.StreetAddress2 = reader["StreetAddress2"].ToString();
-                    model.State = reader["State"].ToString();
-                    model.City = reader["City"].ToString();
-                    model.ZipCode = reader["ZipCode"].ToString();
-                    model.PhoneNumber = reader["Phone"].ToString();
-                    model.Email = reader["Email"].ToString();
-                }
-            }
-            return model;
+        //    using (conn)
+        //    {
+        //        conn.Open();
+        //        com.Parameters.AddWithValue("@Email", email);
+        //        SqlDataReader reader = com.ExecuteReader();
+        //        while (reader.Read())
+        //        {
+        //            model.Id = int.Parse(reader["ID"].ToString());
+        //            model.CompanyName = reader["CompanyName"].ToString();
+        //            model.StreetAddress = reader["StreetAddress"].ToString();
+        //            model.StreetAddress2 = reader["StreetAddress2"].ToString();
+        //            model.State = reader["State"].ToString();
+        //            model.City = reader["City"].ToString();
+        //            model.ZipCode = reader["ZipCode"].ToString();
+        //            model.PhoneNumber = reader["Phone"].ToString();
+        //            model.Email = reader["Email"].ToString();
+        //        }
+        //    }
+        //    return model;
 
-        }
+        //}
 
         public bool CreateProject(ProjectViewModel obj)
         {
@@ -154,6 +158,7 @@ namespace MarketPlace.Repository
 
             com.Parameters.AddWithValue("@CompanyId", obj.CompanyId);
             com.Parameters.AddWithValue("@CreatedBy", "sculler"); //TODO: change this when i get log in set up.
+            com.Parameters.AddWithValue("@FileName", obj.FileName);
             com.Parameters.AddWithValue("@MachineType", obj.MachineType);
             com.Parameters.AddWithValue("@Quantity", obj.Quantity);
             com.Parameters.AddWithValue("@Material", obj.Material);
@@ -161,6 +166,7 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@Dimensions", obj.Dimensions);
             com.Parameters.AddWithValue("@Tolerance", obj.Tolerance);
             com.Parameters.AddWithValue("@Volume", obj.Tolerance);
+            com.Parameters.AddWithValue("@ProjectName", obj.ProjectName);
 
             using (conn)
             {
@@ -194,6 +200,7 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@Dimensions", obj.Dimensions);
             com.Parameters.AddWithValue("@Tolerance", obj.Tolerance);
             com.Parameters.AddWithValue("@Volume", obj.Volume);
+            com.Parameters.AddWithValue("@ProjectName", obj.ProjectName);
 
             using (conn)
             {
@@ -256,6 +263,7 @@ namespace MarketPlace.Repository
                     model.Id = int.Parse(reader["ID"].ToString());
                     model.CompanyId = int.Parse(reader["CompanyId"].ToString());
                     model.SupplierId = int.Parse(reader["SupplierId"].ToString());
+                    model.FileName = reader["FileName"].ToString();
                     model.CreatedDate = (DateTime)reader["CreatedDate"];
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.EditedDate = (DateTime)reader["EditedDate"];
@@ -269,7 +277,7 @@ namespace MarketPlace.Repository
                     model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = (DateTime)reader["AcceptedDate"];
-
+                    model.ProjectName = reader["ProjectName"].ToString();
 
                 }
             }
@@ -300,6 +308,7 @@ namespace MarketPlace.Repository
                     model.Id = int.Parse(reader["ID"].ToString());
                     model.CompanyId = int.Parse(reader["CompanyId"].ToString());
                     model.SupplierId = reader["SupplierId"] == DBNull.Value ? default(int) : int.Parse(reader["SupplierId"].ToString()); //this one is different becuase I had to make it a nullable int
+                    model.FileName = reader["FileName"].ToString();
                     model.CreatedDate = (DateTime)reader["CreatedDate"];
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.EditedDate = reader["EditedDate"] == DBNull.Value ? (DateTime?) null : (DateTime)reader["EditedDate"];
@@ -313,6 +322,7 @@ namespace MarketPlace.Repository
                     model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.ProjectName = reader["ProjectName"].ToString();
 
                     modelList.Add(model);
 
@@ -344,6 +354,7 @@ namespace MarketPlace.Repository
                     model.Id = int.Parse(reader["ID"].ToString());
                     model.CompanyId = int.Parse(reader["CompanyId"].ToString());
                     model.SupplierId = reader["SupplierId"] == DBNull.Value ? default(int) : int.Parse(reader["SupplierId"].ToString()); //this one is different becuase I had to make it a nullable int
+                    model.FileName = reader["FileName"].ToString();
                     model.CreatedDate = (DateTime)reader["CreatedDate"];
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.EditedDate = reader["EditedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["EditedDate"];
@@ -357,6 +368,7 @@ namespace MarketPlace.Repository
                     model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.ProjectName = reader["ProjectName"].ToString();
 
                     modelList.Add(model);
 
@@ -383,6 +395,9 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@CreatedBy", "sculler"); //TODO: Get user worked out.  SessionHelper
             com.Parameters.AddWithValue("@AcceptedDate", obj.AcceptedDate);
             com.Parameters.AddWithValue("@AcceptedBy", obj.AcceptedBy);
+            com.Parameters.AddWithValue("@Comments", obj.Comments);
+            com.Parameters.AddWithValue("@DeclineReason", obj.DeclineReason);
+            com.Parameters.AddWithValue("@Declined", obj.Declined);
 
             using (conn)
             {
@@ -429,6 +444,9 @@ namespace MarketPlace.Repository
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.Comments = reader["Comments"].ToString();
+                    model.DeclineReason = reader["DeclineReason"].ToString();
+                    model.Declined = reader["Declined"] as bool? ?? false;
 
                     modelList.Add(model);
 
@@ -439,6 +457,80 @@ namespace MarketPlace.Repository
 
 
         }
+
+        public BidViewModel GetBidById(int bidId)
+        {
+            BidViewModel model = new BidViewModel();
+
+            DbConnection();
+            SqlCommand com = new SqlCommand("GetBidsById", conn);
+            com.CommandType = System.Data.CommandType.StoredProcedure;
+
+            using (conn)
+            {
+                conn.Open();
+                com.Parameters.AddWithValue("@BidId", bidId);
+                SqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    model.Id = int.Parse(reader["ID"].ToString());
+                    model.ProjectId = int.Parse(reader["ProjectId"].ToString());
+                    model.SupplierId = int.Parse(reader["SupplierId"].ToString());
+                    model.Price = (decimal)(reader["Price"]);
+                    model.Time = reader["Time"].ToString();
+                    model.QualityLevel = reader["QualityLevel"].ToString();
+                    model.CreatedDate = (DateTime)reader["CreatedDate"];
+                    model.CreatedBy = reader["CreatedBy"].ToString();
+                    model.AcceptedBy = reader["AcceptedBy"].ToString();
+                    model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.Comments = reader["Comments"].ToString();
+                    model.DeclineReason = reader["DeclineReason"].ToString();
+                    model.Declined = reader["Declined"] as bool? ?? false;
+
+                }
+            }
+            return model;
+
+        }
+
+        public bool EditBid(BidViewModel obj)
+        {
+            DbConnection();
+            SqlCommand com = new SqlCommand("EditBid", conn);
+            com.CommandType = System.Data.CommandType.StoredProcedure;
+
+            com.Parameters.AddWithValue("@Id", obj.Id);
+            com.Parameters.AddWithValue("@ProjectId", obj.ProjectId);
+            com.Parameters.AddWithValue("@SupplierId", obj.SupplierId);
+            com.Parameters.AddWithValue("@Price", obj.Price);
+            com.Parameters.AddWithValue("@Time", obj.Time);
+            com.Parameters.AddWithValue("@QualityLevel", obj.QualityLevel);
+            //com.Parameters.AddWithValue("@CreatedDate", obj.Size);
+            com.Parameters.AddWithValue("@CreatedBy", "sculler"); //TODO: Get user worked out.  SessionHelper
+            com.Parameters.AddWithValue("@AcceptedDate", obj.AcceptedDate);
+            com.Parameters.AddWithValue("@AcceptedBy", obj.AcceptedBy);
+            com.Parameters.AddWithValue("@Comments", obj.Comments);
+            com.Parameters.AddWithValue("@DeclineReason", obj.DeclineReason);
+            com.Parameters.AddWithValue("@Declined", obj.Declined);
+
+
+            using (conn)
+            {
+                conn.Open();
+                int i = com.ExecuteNonQuery();
+                if (i >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+
+        }
+
 
         public List<BidViewModel> GetBidsByProjectId(int projectId)
         {
@@ -467,6 +559,9 @@ namespace MarketPlace.Repository
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.Comments = reader["Comments"].ToString();
+                    model.DeclineReason = reader["DeclineReason"].ToString();
+                    model.Declined = reader["Declined"] as bool? ?? false;
 
                     modelList.Add(model);
                 }
@@ -487,7 +582,7 @@ namespace MarketPlace.Repository
             string salt = Convert.ToBase64String(obj.Salt);
 
             com.Parameters.AddWithValue("@CompanyId", obj.CompanyId);
-            com.Parameters.AddWithValue("@UserName", obj.UserName);
+            com.Parameters.AddWithValue("@Email", obj.Email);
             com.Parameters.AddWithValue("@Password", password);
             com.Parameters.AddWithValue("@Salt", salt);
 
@@ -520,7 +615,7 @@ namespace MarketPlace.Repository
             using (conn)
             {
                 conn.Open();
-                com.Parameters.AddWithValue("@UserName", model.UserName);
+                com.Parameters.AddWithValue("@Email", model.Email);
                 SqlDataReader reader = com.ExecuteReader();
                 while (reader.Read())
                 {
@@ -550,7 +645,7 @@ namespace MarketPlace.Repository
 
         }
 
-        public int GetPasswordCompanyId(string userName)
+        public int GetPasswordCompanyId(string email)
         {
             DbConnection();
             SqlCommand com = new SqlCommand("GetPasswordCompanyId", conn);
@@ -560,11 +655,11 @@ namespace MarketPlace.Repository
             using (conn)
             {
                 conn.Open();
-                com.Parameters.AddWithValue("@UserName", userName);
+                com.Parameters.AddWithValue("@Email", email);
                 SqlDataReader reader = com.ExecuteReader();
                 while (reader.Read())
                 {
-                    companyId = int.Parse(reader["UserId"].ToString());
+                    companyId = int.Parse(reader["CompanyId"].ToString());
                 }
             }
             return companyId;
