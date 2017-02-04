@@ -9,7 +9,7 @@ create procedure [dbo].[CreateLogIn]
 (  
    
    @CompanyId int,
-   @UserName varchar (max) = null,  
+   @Email varchar (max) = null,  
    @Password nvarchar(128),  
    @Salt nvarchar(128)
   
@@ -17,5 +17,5 @@ create procedure [dbo].[CreateLogIn]
 )  
 as  
 begin  
-   Insert into LogIn values(@CompanyId, @UserName, @Password, @Salt )  
+   Insert into LogIn values(@CompanyId, @Email, @Password, @Salt )  
 End  

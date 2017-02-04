@@ -11,10 +11,10 @@ GO
 Create procedure [dbo].[GetPasswordCompanyId]  
 (  
    
-  @UserName varchar(max)
+  @Email varchar(max)
   
 )  
 as  
 begin  
-   Select UserId From [LogIn] where UserName = @UserName  
+   Select CompanyId From [LogIn] where Email = @Email 
 End  

@@ -11,10 +11,10 @@ GO
 Create procedure [dbo].[GetPasswordByUserName]  
 (  
    
-  @UserName varchar(max)
+  @Email varchar(max)
   
 )  
 as  
 begin  
-   Select [Password], Salt From [LogIn] where UserName = @UserName  
+   Select [Password], Salt From [LogIn] where Email = @Email  
 End  
