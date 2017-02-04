@@ -1,4 +1,4 @@
-Create procedure [dbo].[UserEdit]  
+Create procedure [dbo].[EditCompany]  
 (  
    @Id int,
    @CompanyName varchar (max),
@@ -15,7 +15,7 @@ Create procedure [dbo].[UserEdit]
 )  
 as  
 begin  
-	Update Users
+	Update Company
 	set
 	CompanyName = @CompanyName, 
 	StreetAddress = @StreetAddress,

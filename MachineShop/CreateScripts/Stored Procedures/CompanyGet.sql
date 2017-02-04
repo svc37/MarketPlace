@@ -8,7 +8,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-Create procedure [dbo].[GetUser]  
+Create procedure [dbo].[GetCompany]  
 (  
    
   @Id int
@@ -16,7 +16,7 @@ Create procedure [dbo].[GetUser]
 )  
 as  
 begin  
-   Select * From Users where ID = @Id  
+   Select * From Company where ID = @Id  
 End  
 
 

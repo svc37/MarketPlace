@@ -7,6 +7,9 @@
 */
 
 /* To prevent any potential data loss issues, you should review this script in detail before running it outside the context of the database designer.*/
+USE [MachineShop]
+GO
+
 BEGIN TRANSACTION
 SET QUOTED_IDENTIFIER ON
 SET ARITHABORT ON
@@ -18,7 +21,7 @@ SET ANSI_WARNINGS ON
 COMMIT
 BEGIN TRANSACTION
 GO
-CREATE TABLE dbo.Users
+CREATE TABLE dbo.Company
 	(
 	ID int IDENTITY(1,1) NOT NULL,
 	CompanyName varchar(MAX) NULL,
@@ -27,7 +30,6 @@ CREATE TABLE dbo.Users
 	City varchar(MAX) NULL,
 	State varchar(MAX) NULL,
 	ZipCode varchar(10) NULL,
-	Email varchar(MAX) NULL,
 	Phone varchar(20) NULL,
 	CreatedDate date NOT NULL,
 	LastEdit date NULL,
@@ -35,13 +37,13 @@ CREATE TABLE dbo.Users
 	)  ON [PRIMARY]
 	 TEXTIMAGE_ON [PRIMARY]
 GO
-ALTER TABLE dbo.Users ADD CONSTRAINT
-	PK_Users PRIMARY KEY CLUSTERED 
+ALTER TABLE dbo.Company ADD CONSTRAINT
+	PK_Company PRIMARY KEY CLUSTERED 
 	(
 	ID
 	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
 GO
-ALTER TABLE dbo.Users SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE dbo.Company SET (LOCK_ESCALATION = TABLE)
 GO
 COMMIT
