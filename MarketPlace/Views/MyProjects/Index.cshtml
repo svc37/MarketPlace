@@ -11,6 +11,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.CadFile)
         </th>
         <th>
@@ -59,6 +62,9 @@
 
     foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
             <td>
                 @Html.ActionLink(item.FileName, "DownloadFile", "MyProjects", new { fileName = item.FileName }, null)
             </td>

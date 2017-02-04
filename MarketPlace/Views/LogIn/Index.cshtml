@@ -1,17 +1,20 @@
 ﻿@model MarketPlace.Models.LogInViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Log In Index";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutLogIn.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Company Name?</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>LogInViewModel</h4>
+        <h4>Please Log In</h4>
         <hr />
 
         <div class="form-group">
@@ -27,7 +30,7 @@
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.PasswordText, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PasswordText, "", new { @class = "text-danger" })
-                @ViewBag.Error;
+                @ViewBag.Error
 
             </div>
         </div>
@@ -37,7 +40,7 @@
                 <input type="submit" value="Submit" class="btn btn-default" />
             </div>
         </div>
-        <div class="nav navbar-nav navbar-right">
+        <div class="nav navbar-nav">
             @Html.ActionLink("Register", "Create", "Company")
         </div>
     </div>

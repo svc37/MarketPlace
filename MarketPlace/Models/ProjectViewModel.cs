@@ -79,5 +79,9 @@ namespace MarketPlace.Models
         [Display(Name = "Volume")]
         public string Volume { get; set; }
 
+        [DataType(DataType.Text)]
+        [Display(Name = "Project Name")]
+        public string ProjectName { get; set; }
+
     }
 }

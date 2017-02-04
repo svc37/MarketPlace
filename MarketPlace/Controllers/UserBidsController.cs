@@ -44,6 +44,18 @@ namespace MarketPlace.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Edit(BidViewModel model)
+        {
+            //BidViewModel model = new BidViewModel();
+            //model = db.GetBidById(model.id);
+            model.DeclineReason = model.DeclineReason;
+            model.Declined = true;
+            db.EditBid(model);
+            return RedirectToAction("Index", "MyProjectBids");
+        }
+
+
 
     }
 }

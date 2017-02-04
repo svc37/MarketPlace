@@ -207,6 +207,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
+    <Compile Include="Controllers\LogOutController.cs" />
     <Compile Include="Controllers\MyProjectBidsController.cs" />
     <Compile Include="Controllers\MyProjectsController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -301,9 +302,11 @@
     <Content Include="Views\UserBids\Index.cshtml" />
     <Content Include="Views\MyProjectBids\Index.cshtml" />
     <Content Include="Views\UserBids\Create.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\LogOut\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

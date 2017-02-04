@@ -166,6 +166,7 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@Dimensions", obj.Dimensions);
             com.Parameters.AddWithValue("@Tolerance", obj.Tolerance);
             com.Parameters.AddWithValue("@Volume", obj.Tolerance);
+            com.Parameters.AddWithValue("@ProjectName", obj.ProjectName);
 
             using (conn)
             {
@@ -199,6 +200,7 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@Dimensions", obj.Dimensions);
             com.Parameters.AddWithValue("@Tolerance", obj.Tolerance);
             com.Parameters.AddWithValue("@Volume", obj.Volume);
+            com.Parameters.AddWithValue("@ProjectName", obj.ProjectName);
 
             using (conn)
             {
@@ -275,7 +277,7 @@ namespace MarketPlace.Repository
                     model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = (DateTime)reader["AcceptedDate"];
-
+                    model.ProjectName = reader["ProjectName"].ToString();
 
                 }
             }
@@ -320,6 +322,7 @@ namespace MarketPlace.Repository
                     model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.ProjectName = reader["ProjectName"].ToString();
 
                     modelList.Add(model);
 
@@ -365,6 +368,7 @@ namespace MarketPlace.Repository
                     model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.ProjectName = reader["ProjectName"].ToString();
 
                     modelList.Add(model);
 
@@ -392,6 +396,8 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@AcceptedDate", obj.AcceptedDate);
             com.Parameters.AddWithValue("@AcceptedBy", obj.AcceptedBy);
             com.Parameters.AddWithValue("@Comments", obj.Comments);
+            com.Parameters.AddWithValue("@DeclineReason", obj.DeclineReason);
+            com.Parameters.AddWithValue("@Declined", obj.Declined);
 
             using (conn)
             {
@@ -439,7 +445,8 @@ namespace MarketPlace.Repository
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
                     model.Comments = reader["Comments"].ToString();
-
+                    model.DeclineReason = reader["DeclineReason"].ToString();
+                    model.Declined = reader["Declined"] as bool? ?? false;
 
                     modelList.Add(model);
 
@@ -450,6 +457,80 @@ namespace MarketPlace.Repository
 
 
         }
+
+        public BidViewModel GetBidById(int bidId)
+        {
+            BidViewModel model = new BidViewModel();
+
+            DbConnection();
+            SqlCommand com = new SqlCommand("GetBidsById", conn);
+            com.CommandType = System.Data.CommandType.StoredProcedure;
+
+            using (conn)
+            {
+                conn.Open();
+                com.Parameters.AddWithValue("@BidId", bidId);
+                SqlDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    model.Id = int.Parse(reader["ID"].ToString());
+                    model.ProjectId = int.Parse(reader["ProjectId"].ToString());
+                    model.SupplierId = int.Parse(reader["SupplierId"].ToString());
+                    model.Price = (decimal)(reader["Price"]);
+                    model.Time = reader["Time"].ToString();
+                    model.QualityLevel = reader["QualityLevel"].ToString();
+                    model.CreatedDate = (DateTime)reader["CreatedDate"];
+                    model.CreatedBy = reader["CreatedBy"].ToString();
+                    model.AcceptedBy = reader["AcceptedBy"].ToString();
+                    model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
+                    model.Comments = reader["Comments"].ToString();
+                    model.DeclineReason = reader["DeclineReason"].ToString();
+                    model.Declined = reader["Declined"] as bool? ?? false;
+
+                }
+            }
+            return model;
+
+        }
+
+        public bool EditBid(BidViewModel obj)
+        {
+            DbConnection();
+            SqlCommand com = new SqlCommand("EditBid", conn);
+            com.CommandType = System.Data.CommandType.StoredProcedure;
+
+            com.Parameters.AddWithValue("@Id", obj.Id);
+            com.Parameters.AddWithValue("@ProjectId", obj.ProjectId);
+            com.Parameters.AddWithValue("@SupplierId", obj.SupplierId);
+            com.Parameters.AddWithValue("@Price", obj.Price);
+            com.Parameters.AddWithValue("@Time", obj.Time);
+            com.Parameters.AddWithValue("@QualityLevel", obj.QualityLevel);
+            //com.Parameters.AddWithValue("@CreatedDate", obj.Size);
+            com.Parameters.AddWithValue("@CreatedBy", "sculler"); //TODO: Get user worked out.  SessionHelper
+            com.Parameters.AddWithValue("@AcceptedDate", obj.AcceptedDate);
+            com.Parameters.AddWithValue("@AcceptedBy", obj.AcceptedBy);
+            com.Parameters.AddWithValue("@Comments", obj.Comments);
+            com.Parameters.AddWithValue("@DeclineReason", obj.DeclineReason);
+            com.Parameters.AddWithValue("@Declined", obj.Declined);
+
+
+            using (conn)
+            {
+                conn.Open();
+                int i = com.ExecuteNonQuery();
+                if (i >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+
+        }
+
 
         public List<BidViewModel> GetBidsByProjectId(int projectId)
         {
@@ -479,6 +560,8 @@ namespace MarketPlace.Repository
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
                     model.Comments = reader["Comments"].ToString();
+                    model.DeclineReason = reader["DeclineReason"].ToString();
+                    model.Declined = reader["Declined"] as bool? ?? false;
 
                     modelList.Add(model);
                 }

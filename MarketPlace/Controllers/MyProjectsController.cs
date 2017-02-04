@@ -41,10 +41,6 @@ namespace MarketPlace.Controllers
             string filename = Path.GetFileName(model.CadFile.FileName);
             string savePath = Path.Combine(targetFolder, filename);
             model.CadFile.SaveAs(savePath);
-            //if (System.IO.File.Exists(savePath))
-            //{
-
-            //}
 
             model.FileName = filename;
             model.CompanyId = SessionHelper.CompanyId;

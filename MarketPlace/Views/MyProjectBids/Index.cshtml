@@ -5,87 +5,178 @@
 }
 
 <h2>Bids for My Projects</h2>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@*figure out why these things aren't loading from layout page*@
+
+<style>
+    .popup{
+        
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
+    }
+    .popupLink{
+        cursor:pointer;
+    }
+</style>
+
 
 <p>
     @*@Html.ActionLink("Create New", "Create")*@
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SupplierId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QualityLevel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AcceptedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AcceptedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comments)
-        </th>
 
-        <th></th>
-    </tr>
+@using (Html.BeginForm("Edit","UserBids", FormMethod.Post))
+{
+        <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupplierId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QualityLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcceptedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcceptedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeclineReason)
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SupplierId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QualityLevel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AcceptedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AcceptedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comments)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
-            @Html.ActionLink(linkText: "Accept", actionName: "Index", controllerName: "MyProjectBids", routeValues: null, htmlAttributes: null)   |
-            @Html.ActionLink(linkText: "Decline", actionName: "Index", controllerName: "MyProjectBids", routeValues: null, htmlAttributes: null)   
+            <th></th>
+        </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplierId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QualityLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcceptedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcceptedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => item.DeclineReason)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                @Html.ActionLink(linkText: "Accept", actionName: "Index", controllerName: "MyProjectBids", routeValues: null, htmlAttributes: null)   |
+                <a onclick="ToggleDialog()" class="popupLink" >Decline</a>
+            </td>
+        </tr>
+    }
+    </table>
 
-        </td>
-    </tr>
+    <div id="Dialog-Box" class="popup">
+        @*<label>Decline Reason</label>
+        <textarea rows="5" cols="80" type="text" id="tbDeclineReason"> </textarea>
+        <input type="submit" onclick="ToggleDialog()" value="cancel" />*@
+        @*@Html.ActionLink(linkText: "Save", actionName: "Edit", controllerName: "UserBids", routeValues: null, htmlAttributes: null)   |*@
+        <input type="submit" value="Save2" class="btn btn-default" />
+
+        
+    </div>
 }
 
-</table>
+
+<script>
+    var currentItemId;
+    $('#Dialog-Box').hide();
+
+    function ToggleDialog() {
+
+        //currentItemId = itemId;
+        $('#Dialog-Box').toggle();
+
+        BackgroundColor();
+    }
+    function GetId(){
+        return currentItemId;
+    }
+
+    function GetReason()
+    {
+        var reason = $('#tbDeclineReason').val();
+        return reason;
+    }
+
+    @*function onsave() {
+        $.ajax({
+            url: '@Url.Action("Edit", "UserBids")',
+            type: 'POST',
+            data: {
+                bidId: currentItemId,
+                declineReason: $('#tbDeclineReason').val()
+            },
+            error: function () {
+                alert("an error has occurred");
+            },
+            success: function (data) {
+                alert("success");
+            }
+
+        }});*@
+
+    function BackgroundColor()
+    {
+        if ($('#Dialog-Box').is(":visible"))
+        {
+            $("body").css("background-color", "rgba(0, 0, 0, 0.5)");
+            $('#Dialog-Box').css("background-color", "white");
+        }
+        else {
+            $("body").css("background-color", "white");
+            //$('#Dialog-Box').css("background-color", "white");
+        }
+
+    }
+</script>
