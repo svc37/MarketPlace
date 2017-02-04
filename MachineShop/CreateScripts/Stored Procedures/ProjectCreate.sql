@@ -10,6 +10,7 @@ create procedure [dbo].[CreateProject]
    
    @CompanyId int,
    @SupplierId int = null,
+   @FileName varchar (max),
    @CreatedBy varchar (max) = null,  
    @MachineType int,  
    @Quantity int,
@@ -17,10 +18,11 @@ create procedure [dbo].[CreateProject]
    @Size varchar (max),
    @Dimensions varchar (max),
    @Tolerance varchar (max),
-   @Volume varchar (max)
+   @Volume varchar (max),
+   @ProjectName varchar(max)
 
 )  
 as  
 begin  
-   Insert into Projects values(@CompanyId, @SupplierId, GETDATE(), @CreatedBy, NULL, Null, @MachineType, @Quantity, @Material, @Size, @Dimensions, @Tolerance, @Volume, null, null )  
+   Insert into Projects values(@CompanyId, @SupplierId, @FileName, GETDATE(), @CreatedBy, NULL, Null, @MachineType, @Quantity, @Material, @Size, @Dimensions, @Tolerance, @Volume, null, null, @ProjectName )  
 End  
