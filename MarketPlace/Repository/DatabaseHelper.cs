@@ -15,7 +15,7 @@ namespace MarketPlace.Repository
         private void DbConnection()
         {
             string constr = ConfigurationManager.ConnectionStrings["DbConn"].ToString();
-            conn = new SqlConnection(constr); //connection string not working. S
+            conn = new SqlConnection(constr); 
 
         }
 
@@ -71,7 +71,7 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@ZipCode", obj.ZipCode);
             //com.Parameters.AddWithValue("@Email", obj.Email);
             com.Parameters.AddWithValue("@Phone", obj.PhoneNumber);
-            com.Parameters.AddWithValue("@EditedBy", "Shaun Culler"); //TODO: Need to change this once we work out logging in. 
+            com.Parameters.AddWithValue("@EditedBy", SessionHelper.CurrentUser);
 
             using (conn)
             {
@@ -157,15 +157,12 @@ namespace MarketPlace.Repository
             com.CommandType = System.Data.CommandType.StoredProcedure;
 
             com.Parameters.AddWithValue("@CompanyId", obj.CompanyId);
-            com.Parameters.AddWithValue("@CreatedBy", "sculler"); //TODO: change this when i get log in set up.
+            com.Parameters.AddWithValue("@CreatedBy", SessionHelper.CurrentUser); 
             com.Parameters.AddWithValue("@FileName", obj.FileName);
             com.Parameters.AddWithValue("@MachineType", obj.MachineType);
             com.Parameters.AddWithValue("@Quantity", obj.Quantity);
             com.Parameters.AddWithValue("@Material", obj.Material);
-            com.Parameters.AddWithValue("@Size", obj.Size);
             com.Parameters.AddWithValue("@Dimensions", obj.Dimensions);
-            com.Parameters.AddWithValue("@Tolerance", obj.Tolerance);
-            com.Parameters.AddWithValue("@Volume", obj.Tolerance);
             com.Parameters.AddWithValue("@ProjectName", obj.ProjectName);
 
             using (conn)
@@ -192,14 +189,11 @@ namespace MarketPlace.Repository
             com.CommandType = System.Data.CommandType.StoredProcedure;
 
             com.Parameters.AddWithValue("@Id", obj.Id);
-            com.Parameters.AddWithValue("@EditedBy", "Shaun Culler"); //TODO: Need to change this once we work out logging in. 
+            com.Parameters.AddWithValue("@EditedBy", SessionHelper.CurrentUser);
             com.Parameters.AddWithValue("@MachineType", obj.MachineType);
             com.Parameters.AddWithValue("@Quantity", obj.Quantity);
             com.Parameters.AddWithValue("@Material", obj.Material);
-            com.Parameters.AddWithValue("@Size", obj.Size);
             com.Parameters.AddWithValue("@Dimensions", obj.Dimensions);
-            com.Parameters.AddWithValue("@Tolerance", obj.Tolerance);
-            com.Parameters.AddWithValue("@Volume", obj.Volume);
             com.Parameters.AddWithValue("@ProjectName", obj.ProjectName);
 
             using (conn)
@@ -268,13 +262,10 @@ namespace MarketPlace.Repository
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.EditedDate = (DateTime)reader["EditedDate"];
                     model.EditedBy = reader["EditedBy"].ToString();
-                    model.MachineType = (MachineType)reader["MachineType"];
+                    model.MachineType = (EnumHelper.MachineType)reader["MachineType"];
                     model.Quantity = reader["Quantity"].ToString();
-                    model.Material = reader["Material"].ToString();
-                    model.Size = reader["Size"].ToString();
+                    model.Material = (EnumHelper.Material)reader["Material"];
                     model.Dimensions = reader["Dimensions"].ToString();
-                    model.Tolerance = reader["Tolerance"].ToString();
-                    model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = (DateTime)reader["AcceptedDate"];
                     model.ProjectName = reader["ProjectName"].ToString();
@@ -313,13 +304,10 @@ namespace MarketPlace.Repository
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.EditedDate = reader["EditedDate"] == DBNull.Value ? (DateTime?) null : (DateTime)reader["EditedDate"];
                     model.EditedBy = reader["EditedBy"].ToString();
-                    model.MachineType = (MachineType)reader["MachineType"];
+                    model.MachineType = (EnumHelper.MachineType)reader["MachineType"];
                     model.Quantity = reader["Quantity"].ToString();
-                    model.Material = reader["Material"].ToString();
-                    model.Size = reader["Size"].ToString();
+                    model.Material = (EnumHelper.Material)reader["Material"];
                     model.Dimensions = reader["Dimensions"].ToString();
-                    model.Tolerance = reader["Tolerance"].ToString();
-                    model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
                     model.ProjectName = reader["ProjectName"].ToString();
@@ -359,13 +347,10 @@ namespace MarketPlace.Repository
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.EditedDate = reader["EditedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["EditedDate"];
                     model.EditedBy = reader["EditedBy"].ToString();
-                    model.MachineType = (MachineType)reader["MachineType"];
+                    model.MachineType = (EnumHelper.MachineType)reader["MachineType"];
                     model.Quantity = reader["Quantity"].ToString();
-                    model.Material = reader["Material"].ToString();
-                    model.Size = reader["Size"].ToString();
+                    model.Material = (EnumHelper.Material)reader["Material"];
                     model.Dimensions = reader["Dimensions"].ToString();
-                    model.Tolerance = reader["Tolerance"].ToString();
-                    model.Volume = reader["Volume"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
                     model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
                     model.ProjectName = reader["ProjectName"].ToString();
@@ -390,9 +375,8 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@SupplierId", obj.SupplierId);
             com.Parameters.AddWithValue("@Price", obj.Price);
             com.Parameters.AddWithValue("@Time", obj.Time);
-            com.Parameters.AddWithValue("@QualityLevel", obj.QualityLevel);
             //com.Parameters.AddWithValue("@CreatedDate", obj.Size);
-            com.Parameters.AddWithValue("@CreatedBy", "sculler"); //TODO: Get user worked out.  SessionHelper
+            com.Parameters.AddWithValue("@CreatedBy", SessionHelper.CurrentUser); 
             com.Parameters.AddWithValue("@AcceptedDate", obj.AcceptedDate);
             com.Parameters.AddWithValue("@AcceptedBy", obj.AcceptedBy);
             com.Parameters.AddWithValue("@Comments", obj.Comments);
@@ -439,7 +423,6 @@ namespace MarketPlace.Repository
                     model.SupplierId = int.Parse(reader["SupplierId"].ToString());
                     model.Price = (decimal)(reader["Price"]);
                     model.Time = reader["Time"].ToString();
-                    model.QualityLevel = reader["QualityLevel"].ToString();
                     model.CreatedDate = (DateTime)reader["CreatedDate"];
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
@@ -478,7 +461,6 @@ namespace MarketPlace.Repository
                     model.SupplierId = int.Parse(reader["SupplierId"].ToString());
                     model.Price = (decimal)(reader["Price"]);
                     model.Time = reader["Time"].ToString();
-                    model.QualityLevel = reader["QualityLevel"].ToString();
                     model.CreatedDate = (DateTime)reader["CreatedDate"];
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
@@ -504,9 +486,8 @@ namespace MarketPlace.Repository
             com.Parameters.AddWithValue("@SupplierId", obj.SupplierId);
             com.Parameters.AddWithValue("@Price", obj.Price);
             com.Parameters.AddWithValue("@Time", obj.Time);
-            com.Parameters.AddWithValue("@QualityLevel", obj.QualityLevel);
             //com.Parameters.AddWithValue("@CreatedDate", obj.Size);
-            com.Parameters.AddWithValue("@CreatedBy", "sculler"); //TODO: Get user worked out.  SessionHelper
+            com.Parameters.AddWithValue("@CreatedBy", SessionHelper.CurrentUser); 
             com.Parameters.AddWithValue("@AcceptedDate", obj.AcceptedDate);
             com.Parameters.AddWithValue("@AcceptedBy", obj.AcceptedBy);
             com.Parameters.AddWithValue("@Comments", obj.Comments);
@@ -554,7 +535,6 @@ namespace MarketPlace.Repository
                     model.SupplierId = int.Parse(reader["SupplierId"].ToString());
                     model.Price = (decimal)(reader["Price"]);
                     model.Time = reader["Time"].ToString();
-                    model.QualityLevel = reader["QualityLevel"].ToString();
                     model.CreatedDate = (DateTime)reader["CreatedDate"];
                     model.CreatedBy = reader["CreatedBy"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();

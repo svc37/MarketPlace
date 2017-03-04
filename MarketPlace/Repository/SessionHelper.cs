@@ -49,5 +49,27 @@ namespace MarketPlace.Repository
             _projectId = projectId.ToString();
         }
 
+
+        private static string _currentUser;
+        public static string CurrentUser
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_currentUser))
+                {
+                    return _currentUser;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        public static void SetCurrentUser(string userEmail)
+        {
+            _currentUser = userEmail;
+        }
+
     }
 }

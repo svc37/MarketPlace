@@ -44,16 +44,7 @@
             @Html.DisplayNameFor(model => model.Material)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Size)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Dimensions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tolerance)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Volume)
         </th>
         <th></th>
     </tr>
@@ -96,16 +87,7 @@
                 @Html.DisplayFor(modelItem => item.Material)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Dimensions)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tolerance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Volume)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) 

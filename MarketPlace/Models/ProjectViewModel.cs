@@ -47,7 +47,7 @@ namespace MarketPlace.Models
         [Required(ErrorMessage = "Please select a machine type")]
         [DataType(DataType.Text)]
         [Display(Name = "Machine Type")]
-        public MachineType MachineType { get; set; }
+        public EnumHelper.MachineType MachineType { get; set; }
 
         [Required(ErrorMessage ="Please enter a quantity")]
         [DataType(DataType.Text)]
@@ -57,27 +57,12 @@ namespace MarketPlace.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Material")]
-        public string Material { get; set; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Size")]
-        public string Size { get; set; }
+        public EnumHelper.Material Material { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Dimensions")]
         public string Dimensions { get; set; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Tolerance")]
-        public string Tolerance { get; set; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Volume")]
-        public string Volume { get; set; }
 
         [DataType(DataType.Text)]
         [Display(Name = "Project Name")]

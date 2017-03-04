@@ -24,7 +24,8 @@ namespace MarketPlace.Controllers
             if (success)
             {
                 SessionHelper.SetCompanyId(db.GetPasswordCompanyId(model.Email));
-                int compId = SessionHelper.CompanyId;
+                SessionHelper.SetCurrentUser(model.Email);
+                //int compId = SessionHelper.CompanyId;
                 return RedirectToAction("Index", "Company");
             }
             else

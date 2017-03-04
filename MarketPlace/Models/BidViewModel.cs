@@ -24,10 +24,6 @@ namespace MarketPlace.Models
         [Display(Name = "Time")]
         public string Time { get; set; }
 
-        [Required]
-        [Display(Name = "Quality Level")]
-        public string QualityLevel { get; set; }
-
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
 

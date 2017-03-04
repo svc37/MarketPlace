@@ -225,7 +225,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ConfigHelper.cs" />
     <Compile Include="Repository\DatabaseHelper.cs" />
-    <Compile Include="Repository\MachineType.cs" />
+    <Compile Include="Repository\EnumHelper.cs" />
     <Compile Include="Repository\Security.cs" />
     <Compile Include="Repository\SessionHelper.cs" />
     <Compile Include="Startup.cs" />
@@ -303,6 +303,7 @@
     <Content Include="Views\MyProjectBids\Index.cshtml" />
     <Content Include="Views\UserBids\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutLogIn.cshtml" />
+    <Content Include="Views\MyProjectBids\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
