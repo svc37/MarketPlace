@@ -11,10 +11,7 @@ Create procedure [dbo].[EditProject]
    @MachineType int,  
    @Quantity int,
    @Material varchar (max),
-   @Size varchar (max),
    @Dimensions varchar (max),
-   @Tolerance varchar (max),
-   @Volume varchar (max),
    @ProjectName varchar (max)
   
 )  
@@ -29,10 +26,7 @@ begin
 	MachineType = @MachineType, 
 	Quantity = @Quantity, 
 	Material = @Material, 
-	Size = @Size,
 	Dimensions = @Dimensions,
-	Tolerance = @Tolerance,
-	Volume = @Volume,
 	ProjectName = @ProjectName
 	
 

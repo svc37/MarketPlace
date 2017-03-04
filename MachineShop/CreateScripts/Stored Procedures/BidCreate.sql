@@ -12,7 +12,6 @@ create procedure [dbo].[CreateBid]
    @SupplierId int,
    @Price decimal(9,2),  
    @Time varchar (max), 
-   @QualityLevel varchar (max) = null,
    --@CreatedDate Date = null,
    @CreatedBy varchar (max) = null, 
    @AcceptedDate date = null,
@@ -23,5 +22,5 @@ create procedure [dbo].[CreateBid]
    )  
 as  
 begin  
-   Insert into Bids values(@ProjectId, @SupplierId, @Price, @Time, @QualityLevel, GETDATE(), @CreatedBy, @AcceptedBy, @AcceptedDate, @Comments, @DeclineReason, @Declined)  
+   Insert into Bids values(@ProjectId, @SupplierId, @Price, @Time, GETDATE(), @CreatedBy, @AcceptedBy, @AcceptedDate, @Comments, @DeclineReason, @Declined)  
 End  
