@@ -16,9 +16,11 @@ namespace MarketPlace.Models
         [Display(Name = "Bidder Id")]
         public int SupplierId { get; set; }
 
-        [Required]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
+
+        [Display(Name = "Price")]
+        public string DisplayPrice { get; set; }
 
         [Required]
         [Display(Name = "Time")]

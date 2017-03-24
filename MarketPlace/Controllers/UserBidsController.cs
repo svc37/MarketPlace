@@ -30,19 +30,32 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public ActionResult Create(BidViewModel model)
         {
+            decimal price;
             model.ProjectId = SessionHelper.ProjectId;
             model.SupplierId = SessionHelper.CompanyId;
+            string strNumber = model.DisplayPrice.Replace(",", "");
 
-            if (db.CreateBid(model))
+            if (Decimal.TryParse(strNumber, out price))
             {
-                return RedirectToAction("Index", "UserBids");
+                model.Price = price;
+                if (db.CreateBid(model))
+                {
+                    return RedirectToAction("Index", "UserBids");
+                }
+                else
+                {
+                    ViewBag.Error = "There was an error";
+                    return View();
+                }
             }
             else
             {
-                ViewBag.Error = "There was an error";
-                return View();
+                ViewBag.PriceError = "Please do not use words nor $";
+                return View(model);
             }
+
         }
+
 
         [HttpPost]
         public ActionResult Edit(BidViewModel model)

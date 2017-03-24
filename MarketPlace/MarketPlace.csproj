@@ -209,7 +209,6 @@
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\LogOutController.cs" />
     <Compile Include="Controllers\MyProjectBidsController.cs" />
-    <Compile Include="Controllers\MyProjectsController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\UserBidsController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
@@ -297,13 +296,12 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\LogIn\Create.cshtml" />
     <Content Include="Views\LogIn\Index.cshtml" />
-    <Content Include="Views\MyProjects\Index.cshtml" />
-    <Content Include="Views\MyProjects\Create.cshtml" />
     <Content Include="Views\UserBids\Index.cshtml" />
     <Content Include="Views\MyProjectBids\Index.cshtml" />
     <Content Include="Views\UserBids\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutLogIn.cshtml" />
     <Content Include="Views\MyProjectBids\Edit.cshtml" />
+    <Content Include="Views\Project\MyProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
