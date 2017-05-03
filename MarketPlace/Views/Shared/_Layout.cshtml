@@ -24,7 +24,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Company")</li>
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
                     <li> @Html.ActionLink(linkText: "Browse Projects", actionName: "Index", controllerName: "Project", routeValues: null, htmlAttributes: null)</li>
-                    <li> @Html.ActionLink(linkText: "My Projects", actionName: "Index", controllerName: "MyProjects", routeValues: null, htmlAttributes: null)</li>
+                    <li> @Html.ActionLink(linkText: "My Projects", actionName: "MyProjects", controllerName: "Project", routeValues: null, htmlAttributes: null)</li>
                     <li> @Html.ActionLink(linkText: "Log Out", actionName: "Index", controllerName: "LogIn", routeValues: null, htmlAttributes: null)</li>
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@

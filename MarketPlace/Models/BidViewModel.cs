@@ -16,15 +16,21 @@ namespace MarketPlace.Models
         [Display(Name = "Bidder Id")]
         public int SupplierId { get; set; }
 
+        [Required]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
 
+        [Required]
         [Display(Name = "Price")]
         public string DisplayPrice { get; set; }
 
         [Required]
         [Display(Name = "Time")]
         public string Time { get; set; }
+
+        //[Required]
+        //[Display(Name = "Time")]
+        public string TimeInterval { get; set; }
 
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
@@ -47,8 +53,6 @@ namespace MarketPlace.Models
         public string DeclineReason { get; set; }
 
         public bool Declined { get; set; }
-
-
 
     }
 }

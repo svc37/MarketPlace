@@ -227,6 +227,7 @@
     <Compile Include="Repository\EnumHelper.cs" />
     <Compile Include="Repository\Security.cs" />
     <Compile Include="Repository\SessionHelper.cs" />
+    <Compile Include="Repository\ValidateFileAttribute.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +303,7 @@
     <Content Include="Views\Shared\_LayoutLogIn.cshtml" />
     <Content Include="Views\MyProjectBids\Edit.cshtml" />
     <Content Include="Views\Project\MyProjects.cshtml" />
+    <Content Include="Views\UserBids\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

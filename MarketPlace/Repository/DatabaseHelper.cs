@@ -150,6 +150,7 @@ namespace MarketPlace.Repository
 
         //}
 
+
         public bool CreateProject(ProjectViewModel obj)
         {
             DbConnection();
@@ -256,18 +257,18 @@ namespace MarketPlace.Repository
                 {
                     model.Id = int.Parse(reader["ID"].ToString());
                     model.CompanyId = int.Parse(reader["CompanyId"].ToString());
-                    model.SupplierId = int.Parse(reader["SupplierId"].ToString());
+                    model.SupplierId = reader["SupplierId"] == DBNull.Value ? default(int) : int.Parse(reader["SupplierId"].ToString()); //this one is different becuase I had to make it a nullable int
                     model.FileName = reader["FileName"].ToString();
                     model.CreatedDate = (DateTime)reader["CreatedDate"];
                     model.CreatedBy = reader["CreatedBy"].ToString();
-                    model.EditedDate = (DateTime)reader["EditedDate"];
+                    model.EditedDate = reader["EditedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["EditedDate"];
                     model.EditedBy = reader["EditedBy"].ToString();
                     model.MachineType = (EnumHelper.MachineType)reader["MachineType"];
                     model.Quantity = reader["Quantity"].ToString();
                     model.Material = (EnumHelper.Material)reader["Material"];
                     model.Dimensions = reader["Dimensions"].ToString();
                     model.AcceptedBy = reader["AcceptedBy"].ToString();
-                    model.AcceptedDate = (DateTime)reader["AcceptedDate"];
+                    model.AcceptedDate = reader["AcceptedDate"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["AcceptedDate"];
                     model.ProjectName = reader["ProjectName"].ToString();
 
                 }
@@ -364,6 +365,7 @@ namespace MarketPlace.Repository
 
 
         }
+
 
         public bool CreateBid(BidViewModel obj)
         {
@@ -512,7 +514,6 @@ namespace MarketPlace.Repository
 
         }
 
-
         public List<BidViewModel> GetBidsByProjectId(int projectId)
         {
             List<BidViewModel> modelList = new List<BidViewModel>();
@@ -551,6 +552,29 @@ namespace MarketPlace.Repository
 
 
         }
+
+        public bool DeleteBid(int bidId)
+        {
+            DbConnection();
+            SqlCommand com = new SqlCommand("DeleteBid", conn);
+            com.CommandType = System.Data.CommandType.StoredProcedure;
+
+            using (conn)
+            {
+                conn.Open();
+                com.Parameters.AddWithValue("@Id", bidId);
+                int i = com.ExecuteNonQuery();
+                if (i >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
 
         public bool CreateLogIn(LogInViewModel obj)
         {

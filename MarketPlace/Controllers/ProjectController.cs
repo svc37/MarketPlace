@@ -27,22 +27,30 @@ namespace MarketPlace.Controllers
             return View();
         }
 
-
         [HttpPost]
         public ActionResult Create(ProjectViewModel model)
         {
-            string targetFolder = ConfigHelper.FileSaveLocation;
-            string filename = Path.GetFileName(model.CadFile.FileName);
-            string savePath = Path.Combine(targetFolder, filename);
-            model.CadFile.SaveAs(savePath);
+            //We cannot validate if a file was uploaded until the form is submited.  So we check this in our custom file validation method here.  (Repository/ValidateFileAttribute.cs)
+            if (ModelState.IsValid)
+            {
+                //TODO:  Should probably pull this out so it can be used anywhere we need.
+                string targetFolder = ConfigHelper.FileSaveLocation;
+                string filename = Path.GetFileName(model.CadFile.FileName);
+                string savePath = Path.Combine(targetFolder, filename);
+                model.CadFile.SaveAs(savePath);
 
-            model.FileName = filename;
-            model.CompanyId = SessionHelper.CompanyId;
-            db.CreateProject(model);
-            return RedirectToAction("Index");
+                model.FileName = filename;
+                model.CompanyId = SessionHelper.CompanyId;
+                db.CreateProject(model);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(model);
+            }
+
 
         }
-
 
         public ActionResult DownloadFile(string fileName)
         {
@@ -77,36 +85,13 @@ namespace MarketPlace.Controllers
             }
         }
 
-        #region Maybe Not Needed
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ActionResult Create(ProjectViewModel model)
-        //{
+        public ActionResult Edit(int id)
+        {
+            ProjectViewModel model = new ProjectViewModel();
+            model = db.GetProjectByProjectId(id);
+            return View(model);
 
-        //    return RedirectToAction("Index");
-        //}
+        }
 
-        //public ActionResult Edit()
-        //{
-
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult Edit(ProjectViewModel model)
-        //{
-
-        //    return RedirectToAction("Index");
-        //}
-
-        //public ActionResult ProjectList(ProjectViewModel model)
-        //{
-
-        //    return RedirectToAction("Index");
-        //}
-        #endregion
     }
 }

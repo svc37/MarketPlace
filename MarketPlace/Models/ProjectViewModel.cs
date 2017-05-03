@@ -17,6 +17,7 @@ namespace MarketPlace.Models
         [DataType(DataType.Text)]
         public string FileName { get; set; }
 
+        [ValidateFile]
         [Display(Name = "File")]
         public HttpPostedFileBase CadFile { get; set; }
 
@@ -44,18 +45,16 @@ namespace MarketPlace.Models
         [Display(Name = "Accepted Date")]
         public DateTime? AcceptedDate { get; set; }
 
-        [Required(ErrorMessage = "Please select a machine type")]
-        [DataType(DataType.Text)]
+        [Range(1, int.MaxValue, ErrorMessage = "Select a Machine Type")]
         [Display(Name = "Machine Type")]
         public EnumHelper.MachineType MachineType { get; set; }
 
-        [Required(ErrorMessage ="Please enter a quantity")]
+        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Quantity")]
         public string Quantity { get; set; }
 
-        [Required]
-        [DataType(DataType.Text)]
+        [Range(1, int.MaxValue, ErrorMessage = "Select Material")]
         [Display(Name = "Material")]
         public EnumHelper.Material Material { get; set; }
 
@@ -64,6 +63,7 @@ namespace MarketPlace.Models
         [Display(Name = "Dimensions")]
         public string Dimensions { get; set; }
 
+        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Project Name")]
         public string ProjectName { get; set; }

@@ -33,11 +33,12 @@ namespace MarketPlace.Controllers
             decimal price;
             model.ProjectId = SessionHelper.ProjectId;
             model.SupplierId = SessionHelper.CompanyId;
-            string strNumber = model.DisplayPrice.Replace(",", "");
+            string strNumber = model.DisplayPrice.Replace(",", "").Replace("$", "");
 
             if (Decimal.TryParse(strNumber, out price))
             {
                 model.Price = price;
+                model.Time = string.Format("{0} {1}", model.Time, model.TimeInterval);
                 if (db.CreateBid(model))
                 {
                     return RedirectToAction("Index", "UserBids");
@@ -50,7 +51,7 @@ namespace MarketPlace.Controllers
             }
             else
             {
-                ViewBag.PriceError = "Please do not use words nor $";
+                ViewBag.PriceError = "Please do not use words.";
                 return View(model);
             }
 
@@ -58,7 +59,7 @@ namespace MarketPlace.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(BidViewModel model)
+        public ActionResult EditDecline(BidViewModel model)
         {
             //BidViewModel model = new BidViewModel();
             //model = db.GetBidById(model.id);
@@ -68,7 +69,32 @@ namespace MarketPlace.Controllers
             return RedirectToAction("Index", "MyProjectBids");
         }
 
+        public ActionResult Edit(int bidId)
+        {
+            BidViewModel model = new BidViewModel();
+            model = db.GetBidById(bidId);
+            return View(model);
+        }
 
+        //[HttpPost]
+        //public ActionResult Edit(BidViewModel model)
+        //{
+
+        //}
+        //[HttpDelete]
+        public ActionResult Delete(int bidId)
+        {
+            if (db.DeleteBid(bidId))
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.Error("There was an error deleting the bid");
+                return RedirectToAction("Index");
+            }
+           
+        }
 
     }
 }

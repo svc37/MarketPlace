@@ -58,7 +58,7 @@
                     @Html.DisplayFor(modelItem => item.ProjectName)
                 </td>
                 <td>
-                    @Html.ActionLink(item.FileName, "DownloadFile", "MyProjects", new { fileName = item.FileName }, null)
+                    @Html.ActionLink(item.FileName, "DownloadFile", "Project", new { fileName = item.FileName }, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.SupplierId)
