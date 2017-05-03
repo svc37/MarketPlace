@@ -23,7 +23,6 @@ begin
     City = @City, 
 	[State] = @State,
 	ZipCode = @ZipCode, 
-	Email = @Email, 
 	Phone = @Phone, 
 	LastEdit = GETDATE(),
 	EditedBy = @EditedBy
