@@ -7,7 +7,7 @@ Create procedure [dbo].[EditCompany]
    @City varchar (max),  
    @State varchar (max),
    @ZipCode varchar (10),
-   @Email varchar (max),
+   --@Email varchar (max),
    @Phone varchar (20),
    @EditedBy varchar(max)
   
