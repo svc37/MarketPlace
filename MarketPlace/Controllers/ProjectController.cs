@@ -35,8 +35,9 @@ namespace MarketPlace.Controllers
             {
                 //TODO:  Should probably pull this out so it can be used anywhere we need.
                 string targetFolder = ConfigHelper.FileSaveLocation;
+                targetFolder = string.Format("~{0}", targetFolder);
                 string filename = Path.GetFileName(model.CadFile.FileName);
-                string savePath = Path.Combine(targetFolder, filename);
+                string savePath = Path.Combine(Server.MapPath(targetFolder), filename);
                 model.CadFile.SaveAs(savePath);
 
                 model.FileName = filename;
@@ -54,7 +55,7 @@ namespace MarketPlace.Controllers
 
         public ActionResult DownloadFile(string fileName)
         {
-            string filepath = Path.Combine(ConfigHelper.FileSaveLocation, fileName);
+            string filepath = Path.Combine(Server.MapPath(ConfigHelper.FileSaveLocation), fileName);
             byte[] filedata = System.IO.File.ReadAllBytes(filepath);
             string contentType = MimeMapping.GetMimeMapping(filepath);
 
