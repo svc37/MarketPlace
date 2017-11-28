@@ -1,3 +1,11 @@
+USE [MachineShop]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
 Create procedure [dbo].[EditProjectBidder]  
 (  
    @Id int,
